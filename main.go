@@ -1,14 +1,9 @@
 package main
 
-import "github.com/gin-gonic/gin"
+import (
+	"github.com/CarlosHoff/crud.git/router"
+)
 
 func main() {
-	r := gin.Default()
-
-	r.GET("/health", func(c *gin.Context) {
-		c.JSON(200, gin.H{
-			"message": "Poject UP",
-		})
-	})
-	r.Run()
+	router.Initialize()
 }
