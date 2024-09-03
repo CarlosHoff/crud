@@ -1,6 +1,9 @@
 package router
 
-import "github.com/gin-gonic/gin"
+import (
+	"github.com/CarlosHoff/crud.git/handler"
+	"github.com/gin-gonic/gin"
+)
 
 func initializeRoutes(r *gin.Engine) {
 
@@ -8,41 +11,31 @@ func initializeRoutes(r *gin.Engine) {
 
 	{
 		v1.GET("/health", func(c *gin.Context) {
-			c.JSON(200, gin.H{
-				"message": "Projeto UP",
-			})
+			handler.HealthHandler(c)
 		})
 	}
 
 	{
 		v1.POST("/create", func(c *gin.Context) {
-			c.JSON(200, gin.H{
-				"message": "Projeto UP",
-			})
+			handler.CreateHandler(c)
 		})
 	}
 
 	{
 		v1.DELETE("/delete", func(c *gin.Context) {
-			c.JSON(200, gin.H{
-				"message": "Projeto UP",
-			})
+			handler.DeleteHandler(c)
 		})
 	}
 
 	{
 		v1.PUT("/update", func(c *gin.Context) {
-			c.JSON(200, gin.H{
-				"message": "Projeto UP",
-			})
+			handler.UpdateHandler(c)
 		})
 	}
 
 	{
 		v1.GET("/search", func(c *gin.Context) {
-			c.JSON(200, gin.H{
-				"message": "Projeto UP",
-			})
+			handler.SearchHandler(c)
 		})
 	}
 
