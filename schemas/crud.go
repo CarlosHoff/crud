@@ -1,4 +1,4 @@
-package shcemas
+package schemas
 
 import (
 	"gorm.io/gorm"

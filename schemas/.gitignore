@@ -1,0 +1,11 @@
+# Binaries
+*.exe
+*.dll
+*.so
+*.dylib
+
+#Test
+*.Test
+
+#coverage
+*.out
