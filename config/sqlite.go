@@ -9,33 +9,42 @@ import (
 )
 
 func InitializeSQLite() (*gorm.DB, error) {
-
+	// Logger simulado (substitua com o seu)
 	logger := GetLogger("sqlite")
-	dbPatch := "./db/main.db"
 
-	_, err := os.Stat(dbPatch)
-	if os.IsNotExist(err) {
-		logger.Infof("DB file not found, creating...")
+	// Caminho do banco de dados SQLite
+	dbPath := "./db/main.db"
+
+	// Verifica se o arquivo de banco de dados existe
+	_, err := os.Stat(dbPath)
+	if err != nil && os.IsNotExist(err) {
+		logger.Infof("db file not found, creating...")
 		err = os.MkdirAll("./db", os.ModePerm)
 		if err != nil {
 			return nil, err
 		}
-		file, err := os.Create(dbPatch)
+		file, err := os.Create(dbPath)
 		if err != nil {
 			return nil, err
 		}
-		file.Close()
+		defer file.Close()
+	} else if err != nil {
+		return nil, err
 	}
 
-	db, err := gorm.Open(sqlite.Open(dbPatch), &gorm.Config{})
+	// Conecta ao banco de dados SQLite
+	db, err := gorm.Open(sqlite.Open(dbPath), &gorm.Config{})
 	if err != nil {
-		logger.Errf("Sqlite opning error: %v", err)
+		logger.Errf("sqlite opening error: %v", err)
 		return nil, err
 	}
+
+	// Realiza a automigração dos esquemas
 	err = db.AutoMigrate(&schemas.Crud{})
 	if err != nil {
-		logger.Errf("Sqlite automigrate error: %v", err)
+		logger.Errf("sqlite automigrate error: %v", err)
 		return nil, err
 	}
+
 	return db, nil
 }
