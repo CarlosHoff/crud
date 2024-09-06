@@ -15,7 +15,7 @@ func CreateHandler(c *gin.Context) {
 	c.BindJSON(&request)
 
 	if err := request.Validate(); err != nil {
-		logger.Errf("Erro ao validar os campos: %v", err.Error())
+		logger.Errf("error to validate fields: %v", err.Error())
 		sendError(c, http.StatusBadRequest, err.Error())
 		return
 	}
@@ -30,7 +30,7 @@ func CreateHandler(c *gin.Context) {
 	}
 
 	if err := db.Create(&crudRecord).Error; err != nil {
-		logger.Errf("Erro ao criar Crud: %v", err.Error())
+		logger.Errf("error to insert record : %v", err.Error())
 		sendError(c, http.StatusInternalServerError, err.Error())
 		return
 	}
