@@ -1,9 +1,21 @@
 package handler
 
-import "github.com/gin-gonic/gin"
+import (
+	"net/http"
+
+	"github.com/CarlosHoff/crud.git/schemas"
+	"github.com/gin-gonic/gin"
+)
 
 func SearchHandler(c *gin.Context) {
-	c.JSON(200, gin.H{
-		"message": "Search",
-	})
+
+	crud := []schemas.Crud{}
+
+	if err := db.Find(&crud).Error; err != nil {
+		sendError(c, http.StatusNoContent, "No Registers ind DB")
+		return
+	}
+
+	sendSucess(c, "search-crud", crud)
+
 }
